@@ -12,8 +12,8 @@ const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loading2, setLoading2] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -23,19 +23,28 @@ const Product = () => {
 
   useEffect(() => {
     const getProduct = () => {
-      setLoading(true);
-      setLoading2(true);
+      
 const data = storeProducts.find(item => item.id == id)
 
-if(data){
-  setLoading(false);
-}
+
       setProduct(data);
       setSimilarProducts(storeProducts);
-      setLoading2(false);
+      
+     
     };
+
     getProduct();
   }, [id]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      setLoading2(false);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   const Loading = () => {
     return (

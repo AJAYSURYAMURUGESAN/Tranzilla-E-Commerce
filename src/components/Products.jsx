@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Products = () => {
   const [data, setData] = useState(storeProducts);
   const [filter, setFilter] = useState(storeProducts);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -18,7 +18,15 @@ const Products = () => {
     dispatch(addCart(product))
   }
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
 
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   const Loading = () => {
     return (
